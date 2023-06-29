@@ -46,7 +46,43 @@ function Home() {
         </main>
       </div>
 
-      <div className="climate-indicators-container"></div>
+      <div className="climate-indicators-container">
+        <div className="content-indicatos">
+          <h2 className="h2-indicator-climate-title">Indicadores Climáticos</h2>
+          <div className="room-hour">
+            <h3 className="room">Reactivos</h3>
+            <span className="hour">08:20 PM</span>
+          </div>
+
+          <div className="status-climate_indicator">
+            <img
+              className="climate_indicator_icon"
+              src={images.climate_indicator_icon}
+              alt=""
+            />
+            <span className="status-text">Óptimo</span>
+          </div>
+          <div className="line line-white"></div>
+          <div className="indicator-metric">
+            <span>Punto de Rocío</span> <span>17°C</span>
+          </div>
+          <div className="bar-background bar-metric">
+            <div className="bar-progress bar-progress-metric"></div>
+          </div>
+          <div className="indicator-metric">
+            <span>Índice de Estrés Térmico</span> <span>39°C</span>
+          </div>
+          <div className="bar-background bar-metric">
+            <div className="bar-progress bar-progress-metric"></div>
+          </div>
+          <div className="indicator-metric">
+            <span>Punto de Condensación</span> <span>39°C</span>
+          </div>
+          <div className="bar-background bar-metric">
+            <div className="bar-progress bar-progress-metric"></div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
