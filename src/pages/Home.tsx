@@ -26,7 +26,7 @@ function Home() {
           </div>
         </div>
         <main className="monitoring-system-container">
-        <div className="line line-main"></div>
+          <div className="line line-main"></div>
           <div className="select-room">
             <h3 className="h3-monitoreo">Monitoreo</h3>
             <select id="id_select-room">
