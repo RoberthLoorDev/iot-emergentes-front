@@ -2,6 +2,7 @@ import React from 'react'
 import CardMeasurement from '../components/Component.CardMeasurement'
 import StatusBar from '../components/Component.StatusBar'
 import images from '../assets/img/img'
+import DataGraph from '../components/Component.DataGraph'
 
 function Home() {
   return (
@@ -24,8 +25,8 @@ function Home() {
             <img src={images.notification_icon} alt="" />
           </div>
         </div>
-        <div className="line"></div>
         <main className="monitoring-system-container">
+        <div className="line line-main"></div>
           <div className="select-room">
             <h3 className="h3-monitoreo">Monitoreo</h3>
             <select id="id_select-room">
@@ -39,8 +40,14 @@ function Home() {
               <CardMeasurement></CardMeasurement>
               <CardMeasurement></CardMeasurement>
             </div>
+            <div className="line"></div>
             <div className="status-bar">
               <StatusBar></StatusBar>
+            </div>
+            <div className="line"></div>
+            <div className="graph-container">
+              <h2 className="status-bar-title data-graph-title">Histórico</h2>
+              <DataGraph></DataGraph>
             </div>
           </div>
         </main>

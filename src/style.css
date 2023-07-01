@@ -97,16 +97,20 @@ span {
 }
 
 .line {
-  margin: 2rem;
+  margin: 2rem 0;
   height: 2px;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.116);
 }
 
+.line-main {
+  margin: 0;
+  margin: 2rem 0;
+}
+
 /*Show data in real time*/
 .monitoring-system-container {
   width: 90%;
-  margin-top: 2rem;
 }
 
 .h3-monitoreo {
@@ -138,6 +142,15 @@ select {
   font-size: 2rem;
 }
 
+.button-show-data:hover {
+  background-color: #6078b4;
+  cursor: pointer;
+}
+
+.button-show-data:active {
+  background-color: #516aaa;
+}
+
 /*CardMeasurement*/
 
 .cards-container {
@@ -154,13 +167,13 @@ select {
   justify-content: center;
   height: 13rem;
   width: 38rem;
-  background-color: #f5f5f5;
+  background-color: #f3f3f3;
   border-radius: 5px;
-  box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.048);
+  /* box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.048); */
   margin-bottom: 1.7rem;
-  border-width: 1px;
+  /* border-width: 1px;
   border-style: solid;
-  border-color: rgba(0, 0, 0, 0.021);
+  border-color: rgba(0, 0, 0, 0.062); */
 }
 
 .card img {
@@ -232,8 +245,12 @@ select {
 }
 
 .text-status {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #828282;
+}
+
+.central-option {
+  padding-left: 2.5rem;
 }
 
 /*Climate Indicators*/
@@ -316,3 +333,10 @@ select {
   height: 1rem;
   background-color: #6e85bf;
 }
+/*Data Graph*/
+
+.data-graph-title {
+  margin-top: 2rem;
+}
+
+
