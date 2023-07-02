@@ -2,16 +2,18 @@ import { Routes, Route } from 'react-router-dom'
 //pages
 import Home from './pages/Home'
 import Login from './pages/Login'
-//styles
+import ProtectedRoute from './routes/Route.ProtectedRoute'
 import './style.css'
-//components
 
 const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Login />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
       </Routes>
     </>
   )

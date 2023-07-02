@@ -421,6 +421,23 @@ select {
   flex-direction: column;
 }
 
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  height: 3rem;
+  width: 100%;
+  background-color: rgba(255, 0, 0, 0.301);
+  border-radius: 2px;
+}
+
+.error span {
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #2b2a2cc2;
+}
+
 label {
   font-size: 1.26rem;
   font-weight: 700;
