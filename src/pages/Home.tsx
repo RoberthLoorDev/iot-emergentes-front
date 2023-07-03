@@ -1,17 +1,109 @@
 import React from 'react'
-import CardMeasurement from '../components/Component.CardMeasurement'
-import StatusBar from '../components/Component.StatusBar'
+import CardMeasurement from '../components/CardMeasurement'
+import StatusBar from '../components/StatusBar'
 import images from '../assets/img/img'
-import DataGraph from '../components/Component.DataGraph'
+import DataGraph from '../components/DataGraph'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 function Home() {
+  //current date
+
+  const [currentDate, setCurrentDate] = useState(new Date())
+  const [temperature, setTemperature] = useState('')
+  const [humidity, setHumidity] = useState('')
+  const [temperatureF, setTemperatureF] = useState(0)
+  const [heatIndex, setHeatIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentDate(new Date())
+    }, 60000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
+  //data actualization in realtime (5 seconds interval)
+  useEffect(() => {
+    const tempData = async () => {
+      try {
+        const responseTemperatureLatest = await axios.get(
+          'http://localhost:3000/api/temperature/latest'
+        )
+
+        const responseHumedityLatest = await axios.get(
+          'http://localhost:3000/api/humidity/latest'
+        )
+
+        const valueTempLatest = responseTemperatureLatest.data.value
+        const valueHumdLatest = responseHumedityLatest.data.value
+        const valueTempFahrenheit = valueTempLatest * (9 / 5) + 32
+        const valueHeatIndex =
+          -42.379 +
+          2.04901523 * valueTempFahrenheit +
+          10.14333127 * valueHumdLatest -
+          0.22475541 * valueTempFahrenheit * valueHumdLatest -
+          6.83783e-3 * valueTempFahrenheit ** 2 -
+          5.481717e-2 * valueHumdLatest ** 2 +
+          1.22874e-3 * valueTempFahrenheit ** 2 * valueHumdLatest +
+          8.5282e-4 * valueTempFahrenheit * valueHumdLatest ** 2 -
+          1.99e-6 * valueTempFahrenheit ** 2 * valueHumdLatest ** 2
+        setTemperature(Number(valueTempLatest).toFixed(1))
+        setHumidity(Number(valueHumdLatest).toFixed(1))
+        setTemperatureF(Number(valueTempFahrenheit.toFixed(1)))
+        setHeatIndex(Number(valueHeatIndex.toFixed(1)))
+      } catch (error) {
+        console.warn(error)
+      }
+    }
+
+    tempData()
+
+    const interval = setInterval(tempData, 5000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
+  const months = [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ]
+
+  const weekDays = [
+    'Domingo',
+    'Lunes',
+    'Martes',
+    'Miércoles',
+    'Jueves',
+    'Viernes',
+    'Sábado',
+  ]
+
   return (
     <div className="home-page-container">
       <div className="main-container">
         <div className="header-container">
           <div className="month-year-container">
-            <span className="span-month-year">Julio 2022</span>
-            <span className="span-day-month"> Martes, 27 de Julio</span>
+            <span className="span-month-year">
+              {months[currentDate.getMonth()]}, {currentDate.getFullYear()}
+            </span>
+            <span className="span-day-month">
+              {' '}
+              {weekDays[currentDate.getDay()]}, {currentDate.getDate()} de{' '}
+              {months[currentDate.getMonth()]}
+            </span>
           </div>
           <h1 className="h1-title">
             Laboratorio de <br />
@@ -35,10 +127,33 @@ function Home() {
             </select>
             <button className="button-show-data">Mostrar</button>
             <div className="cards-container">
-              <CardMeasurement></CardMeasurement>
-              <CardMeasurement></CardMeasurement>
-              <CardMeasurement></CardMeasurement>
-              <CardMeasurement></CardMeasurement>
+              <CardMeasurement
+                title="Temperatura (C)"
+                data={temperature}
+                unit="°C"
+                image={images.thermometer_icon}
+              ></CardMeasurement>
+
+              <CardMeasurement
+                title="Humedad Relativa"
+                data={humidity}
+                unit="%"
+                image={images.humedity_icon}
+              ></CardMeasurement>
+
+              <CardMeasurement
+                title="Temperatura (F)"
+                data={temperatureF.toString()}
+                unit="°F"
+                image={images.thermometer_icon}
+              ></CardMeasurement>
+
+              <CardMeasurement
+                title="Índice de Calor"
+                data={heatIndex.toString()}
+                unit="°C"
+                image={images.warn_icon}
+              ></CardMeasurement>
             </div>
             <div className="line"></div>
             <div className="status-bar">
@@ -58,7 +173,9 @@ function Home() {
           <h2 className="h2-indicator-climate-title">Indicadores Climáticos</h2>
           <div className="room-hour">
             <h3 className="room">Reactivos</h3>
-            <span className="hour">08:20 PM</span>
+            <span className="hour">
+              {currentDate.getHours()}:{currentDate.getMinutes()}
+            </span>
           </div>
 
           <div className="status-climate_indicator">
