@@ -14,6 +14,18 @@ function Home() {
   const [humidity, setHumidity] = useState('')
   const [temperatureF, setTemperatureF] = useState(0)
   const [heatIndex, setHeatIndex] = useState(0)
+  const [dewPoint, setDewPoint] = useState(0)
+  const [heatStress, setHeatStress] = useState(0)
+  const [dewCondensation, setDewCondensation] = useState(0)
+  const [circleColorTemperature, setCircleColorTemperature] = useState('')
+  const [circleColorHumedity, setCircleColorHumedity] = useState('')
+  const [
+    circleColorTemperatureFahrenheit,
+    setCircleColorTemperatureFahrenheit,
+  ] = useState('')
+
+  const [circleColorHeatIndex, setCircleColorHeatIndex] = useState('')
+  const [statusBarPorcentage, setStatusBarPorcentage] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -36,6 +48,10 @@ function Home() {
           'http://localhost:3000/api/humidity/latest'
         )
 
+        const responseMethodsCalculated = await axios.get(
+          'http://localhost:3000/api/method/calculate-methods'
+        )
+
         const valueTempLatest = responseTemperatureLatest.data.value
         const valueHumdLatest = responseHumedityLatest.data.value
         const valueTempFahrenheit = valueTempLatest * (9 / 5) + 32
@@ -49,10 +65,87 @@ function Home() {
           1.22874e-3 * valueTempFahrenheit ** 2 * valueHumdLatest +
           8.5282e-4 * valueTempFahrenheit * valueHumdLatest ** 2 -
           1.99e-6 * valueTempFahrenheit ** 2 * valueHumdLatest ** 2
+        const valueDewPoint =
+          responseMethodsCalculated.data.data.dewPoint.dewPoint
+        const valueHeatStress =
+          responseMethodsCalculated.data.data.heatStress.heatStress
+
+        const valueDewCondensation =
+          responseMethodsCalculated.data.data.dewCondensation.dewCondensation
+
         setTemperature(Number(valueTempLatest).toFixed(1))
         setHumidity(Number(valueHumdLatest).toFixed(1))
         setTemperatureF(Number(valueTempFahrenheit.toFixed(1)))
         setHeatIndex(Number(valueHeatIndex.toFixed(1)))
+        setDewPoint(valueDewPoint.toFixed(1))
+        setHeatStress(valueHeatStress.toFixed(1))
+        setDewCondensation(valueDewCondensation.toFixed(1))
+
+        //background color in status circle
+        let color_temperature = ''
+        let color_humidity = ''
+        let color_temperature_fahrenheit = ''
+
+        if (valueTempLatest < 17) {
+          color_temperature = 'circle-status-red'
+        } else if (valueTempLatest < 20) {
+          color_temperature = 'circle-status-orange'
+        } else if (valueTempLatest <= 25) {
+          color_temperature = 'circle-status-green'
+        } else if (valueTempLatest <= 27) {
+          color_temperature = 'circle-status-orange'
+        } else {
+          color_temperature = 'circle-status-red'
+        }
+
+        if (valueHumdLatest < 20) {
+          color_humidity = 'circle-status-red'
+        } else if (valueHumdLatest < 40) {
+          color_humidity = 'circle-status-orange'
+        } else if (valueHumdLatest <= 60) {
+          color_humidity = 'circle-status-green'
+        } else if (valueHumdLatest <= 80) {
+          color_humidity = 'circle-status-orange'
+        } else {
+          color_humidity = 'circle-status-red'
+        }
+
+        if (valueTempFahrenheit < 50) {
+          color_temperature_fahrenheit = 'circle-status-red'
+        } else if (valueTempFahrenheit < 68) {
+          color_temperature_fahrenheit = 'circle-status-orange'
+        } else if (valueTempFahrenheit <= 77) {
+          color_temperature_fahrenheit = 'circle-status-green'
+        } else if (valueTempFahrenheit <= 87) {
+          color_temperature_fahrenheit = 'circle-status-orange'
+        } else {
+          color_temperature_fahrenheit = 'circle-status-red'
+        }
+
+        setCircleColorTemperature(color_temperature)
+        setCircleColorHumedity(color_humidity)
+        setCircleColorTemperatureFahrenheit(color_temperature_fahrenheit)
+        setCircleColorHeatIndex('circle-status-green')
+        //
+
+        //Mid Points Status System bar
+        const entryValor = valueTempLatest + valueHumdLatest
+        const porcentageBase = 50
+        const valorBase = 73
+
+        let barPorcentage = ((entryValor / valorBase) * porcentageBase).toFixed(
+          0
+        )
+
+        if (Number(barPorcentage) > 100) {
+          barPorcentage = '100'
+        }
+
+        setStatusBarPorcentage(Number(barPorcentage))
+
+        //
+
+        //
       } catch (error) {
         console.warn(error)
       }
@@ -132,6 +225,7 @@ function Home() {
                 data={temperature}
                 unit="°C"
                 image={images.thermometer_icon}
+                circle_color={circleColorTemperature}
               ></CardMeasurement>
 
               <CardMeasurement
@@ -139,6 +233,7 @@ function Home() {
                 data={humidity}
                 unit="%"
                 image={images.humedity_icon}
+                circle_color={circleColorHumedity}
               ></CardMeasurement>
 
               <CardMeasurement
@@ -146,6 +241,7 @@ function Home() {
                 data={temperatureF.toString()}
                 unit="°F"
                 image={images.thermometer_icon}
+                circle_color={circleColorTemperatureFahrenheit}
               ></CardMeasurement>
 
               <CardMeasurement
@@ -153,11 +249,12 @@ function Home() {
                 data={heatIndex.toString()}
                 unit="°C"
                 image={images.warn_icon}
+                circle_color={circleColorHeatIndex}
               ></CardMeasurement>
             </div>
             <div className="line"></div>
             <div className="status-bar">
-              <StatusBar></StatusBar>
+              <StatusBar barPorcentage={statusBarPorcentage}></StatusBar>
             </div>
             <div className="line"></div>
             <div className="graph-container">
@@ -188,19 +285,19 @@ function Home() {
           </div>
           <div className="line line-white"></div>
           <div className="indicator-metric">
-            <span>Punto de Rocío</span> <span>17°C</span>
+            <span>Punto de Rocío</span> <span>{dewPoint} °C</span>
           </div>
           <div className="bar-background bar-metric">
             <div className="bar-progress bar-progress-metric"></div>
           </div>
           <div className="indicator-metric">
-            <span>Índice de Estrés Térmico</span> <span>39°C</span>
+            <span>Índice de Estrés Térmico</span> <span>{heatStress} °C</span>
           </div>
           <div className="bar-background bar-metric">
             <div className="bar-progress bar-progress-metric"></div>
           </div>
           <div className="indicator-metric">
-            <span>Punto de Condensación</span> <span>39°C</span>
+            <span>Punto de Condensación</span> <span>{dewCondensation} °C</span>
           </div>
           <div className="bar-background bar-metric">
             <div className="bar-progress bar-progress-metric"></div>

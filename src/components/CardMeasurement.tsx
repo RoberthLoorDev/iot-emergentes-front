@@ -5,9 +5,16 @@ interface CardMeasurementProps {
   data: string
   unit: string
   image: string
+  circle_color: string
 }
 
-function CardMeasurement({ title, data, unit, image }: CardMeasurementProps) {
+function CardMeasurement({
+  title,
+  data,
+  unit,
+  image,
+  circle_color,
+}: CardMeasurementProps) {
   return (
     <>
       <div className="card">
@@ -18,7 +25,7 @@ function CardMeasurement({ title, data, unit, image }: CardMeasurementProps) {
             <span className="data">{data}</span>
           </div>
         </div>
-        <div className="circle-status"></div>
+        <div className={`circle-status ${circle_color}`}></div>
         <span className="span-simbol-data">{unit}</span>
       </div>
     </>
