@@ -157,7 +157,7 @@ select {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin-top: 3rem;
+  margin-top: 1rem;
   height: 100%;
   width: 100%;
 }
@@ -264,6 +264,10 @@ select {
 
 .central-option {
   padding-left: 2.5rem;
+}
+
+.graph-container{
+  margin-bottom: 5rem;
 }
 
 /*Climate Indicators*/

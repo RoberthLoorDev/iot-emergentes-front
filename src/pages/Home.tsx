@@ -214,11 +214,11 @@ function Home() {
           <div className="line line-main"></div>
           <div className="select-room">
             <h3 className="h3-monitoreo">Monitoreo</h3>
-            <select id="id_select-room">
+            {/* <select id="id_select-room">
               <option value="reactives">Reactivos</option>
               <option value="laboratory">Laboratorio</option>
             </select>
-            <button className="button-show-data">Mostrar</button>
+            <button className="button-show-data">Mostrar</button> */}
             <div className="cards-container">
               <CardMeasurement
                 title="Temperatura (C)"
@@ -260,6 +260,7 @@ function Home() {
             <div className="graph-container">
               <h2 className="status-bar-title data-graph-title">Histórico</h2>
               <DataGraph></DataGraph>
+
             </div>
           </div>
         </main>
