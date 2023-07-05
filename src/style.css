@@ -266,8 +266,52 @@ select {
   padding-left: 2.5rem;
 }
 
-.graph-container{
+.graph-container {
   margin-bottom: 5rem;
+}
+
+/*FOOTER*/
+.background-footer-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #5970d4;
+  height: 20rem;
+  width: 100vw;
+}
+
+.internal-footer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 75%;
+  width: 55%;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.logo-epam-white {
+  width: auto;
+  height: 4rem;
+  margin-bottom: 3rem;
+}
+
+.icons-networks {
+  margin-top: 1rem;
+  display: flex;
+  width: 15%;
+  justify-content: space-between;
+}
+
+.icon-network {
+  width: 2.1rem;
+  height: auto;
+}
+
+.icon-network:hover {
+  transition: 2000;
+  transform: scale(1.2);
 }
 
 /*Climate Indicators*/

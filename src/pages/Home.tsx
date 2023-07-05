@@ -5,6 +5,7 @@ import images from '../assets/img/img'
 import DataGraph from '../components/DataGraph'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Footer from '../components/Footer'
 
 function Home() {
   //current date
@@ -260,10 +261,10 @@ function Home() {
             <div className="graph-container">
               <h2 className="status-bar-title data-graph-title">Histórico</h2>
               <DataGraph></DataGraph>
-
             </div>
           </div>
         </main>
+      <Footer></Footer>
       </div>
 
       <div className="climate-indicators-container">
