@@ -6,6 +6,7 @@ import DataGraph from '../components/DataGraph'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Footer from '../components/Footer'
+import LinealRegresion from '../components/LinealRegresion'
 
 function Home() {
   //current date
@@ -262,6 +263,8 @@ function Home() {
               <h2 className="status-bar-title data-graph-title">Histórico</h2>
               <DataGraph></DataGraph>
             </div>
+            <div className="line"></div>
+            <LinealRegresion></LinealRegresion>
           </div>
         </main>
       <Footer></Footer>

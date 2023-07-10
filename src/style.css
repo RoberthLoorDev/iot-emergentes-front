@@ -109,6 +109,10 @@ span {
 }
 
 /*Show data in real time*/
+
+.select-room {
+  margin-bottom: 5rem;
+}
 .monitoring-system-container {
   width: 90%;
 }
@@ -582,4 +586,33 @@ input[type='submit']:active {
   line-height: 1.5rem;
   margin-top: 0.8rem;
   margin-left: 4.7rem;
+}
+
+/*BUTTONS MACHINE LEARNING*/
+.buttons-machine-learning {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.buttons-machine-learning button {
+  font-size: 2rem;
+  min-height: 4.5rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: .5rem;
+  color: white;
+  background-color:#677ee1;
+
+}
+
+.buttons-machine-learning button:hover{
+  background-color:#566fdf;
+  cursor: pointer;
+}
+
+.buttons-machine-learning button:active{
+  background-color:#4663e2;
+
 }
