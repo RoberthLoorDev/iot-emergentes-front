@@ -9,6 +9,20 @@ import Footer from '../components/Footer'
 import LinealRegresion from '../components/LinealRegresion'
 
 function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false) // Estado para controlar si el usuario ha iniciado sesión
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      setIsLoggedIn(true)
+    }
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    setIsLoggedIn(false)
+  }
+
   //current date
 
   const [currentDate, setCurrentDate] = useState(new Date())
@@ -43,15 +57,15 @@ function Home() {
     const tempData = async () => {
       try {
         const responseTemperatureLatest = await axios.get(
-          'http://localhost:3000/api/temperature/latest'
+          'https://iotbackendtemp.azurewebsites.net/api/temperature/latest'
         )
 
         const responseHumedityLatest = await axios.get(
-          'http://localhost:3000/api/humidity/latest'
+          'https://iotbackendtemp.azurewebsites.net/api/humidity/latest'
         )
 
         const responseMethodsCalculated = await axios.get(
-          'http://localhost:3000/api/method/calculate-methods'
+          'https://iotbackendtemp.azurewebsites.net/api/method/calculate-methods'
         )
 
         const valueTempLatest = responseTemperatureLatest.data.value
@@ -204,13 +218,15 @@ function Home() {
             Laboratorio de <br />
             tratamiento de aguas EPAM
           </h1>
-
-          <div className="box-profile-notification">
-            <img src={images.profile_icon} alt="" />
-          </div>
-          <div className="box-profile-notification">
-            <img src={images.notification_icon} alt="" />
-          </div>
+          {isLoggedIn && (
+            <div className="box-profile-notification">
+              <img
+                src={images.close_sesion}
+                alt="Cerrar sesión"
+                onClick={handleLogout}
+              />
+            </div>
+          )}
         </div>
         <main className="monitoring-system-container">
           <div className="line line-main"></div>
@@ -267,7 +283,7 @@ function Home() {
             <LinealRegresion></LinealRegresion>
           </div>
         </main>
-      <Footer></Footer>
+        <Footer></Footer>
       </div>
 
       <div className="climate-indicators-container">

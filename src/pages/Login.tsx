@@ -20,7 +20,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/user/login',
+        'https://iotbackendtemp.azurewebsites.net/api/user/login',
         {
           userName: userName,
           password: password,

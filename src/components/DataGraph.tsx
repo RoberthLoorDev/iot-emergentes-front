@@ -29,8 +29,8 @@ const DataGraph = () => {
     const fetchData = () => {
       axios
         .all([
-          axios.get('http://localhost:3000/api/humidity/lasted20Data'),
-          axios.get('http://localhost:3000/api/temperature/lasted20Data'),
+          axios.get('https://iotbackendtemp.azurewebsites.net/api/humidity/lasted20Data'),
+          axios.get('https://iotbackendtemp.azurewebsites.net/api/temperature/lasted20Data'),
         ])
         .then(
           axios.spread((humidityResponse, temperatureResponse) => {

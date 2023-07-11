@@ -10,6 +10,7 @@ import logo_epam_white from './logo-epam-white.png'
 import logo_facebook from './logo-facebook.png'
 import logo_instagram from './logo-instagram.png'
 import logo_website from './logo-web.png'
+import close_sesion from './close-sesion.png'
 
 const img = {
   profile_icon,
@@ -24,6 +25,7 @@ const img = {
   logo_facebook,
   logo_instagram,
   logo_website,
+  close_sesion,
 }
 
 export default img
